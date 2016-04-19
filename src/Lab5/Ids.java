@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,6 +28,7 @@ public class Ids {
     private static int x = 1; //for packet handler loop
     private static String host = null;
     
+    
     private static void readPolicyFile(String policyFileName) throws IOException{
         Pattern hostPattern1 = Pattern.compile("host=\\d[1-3]");
         Matcher match;
@@ -35,6 +37,7 @@ public class Ids {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         while((line = bufferedReader.readLine()) != null) {
+            
             System.out.println(line);
         }
         
