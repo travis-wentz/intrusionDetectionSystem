@@ -50,12 +50,12 @@ public class Ids {
                 if (packet.hasHeader(Ip4.ID)) {
                     packet.getHeader(ip4);
                     if(packet.hasHeader(payload)){
-                        currPayload = payload.toHexdump();
+                        //currPayload = payload.toHexdump();
+                    	currPayload = payload.toString();
                         System.out.println("\n The payload info is : " + currPayload + "\n");
                     }
                     String currSource = FormatUtils.ip(ip4.source());
                     System.out.println("The source IP is : " + currSource + "\n");
-
                 }
 //				System.out.println(x + " " + "size of packet is=" + packet.size());
 //				x++;
@@ -63,7 +63,6 @@ public class Ids {
                 //print out all the packet info
                 XmlFormatter out = new XmlFormatter(System.out);
                 try {
-
                     out.format(packet);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
@@ -111,7 +110,7 @@ public class Ids {
 //			readPcapFile(input);
 //		}
 
-        readPcapFile("trace5.pcap");
+        readPcapFile("trace1.pcap");
     }
 
 }
