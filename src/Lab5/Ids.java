@@ -27,23 +27,33 @@ public class Ids {
     private static int x = 1; //for packet handler loop
     private static String host = null;
     private static LinkedList<Policy> policies = new LinkedList();
-    private static final String ipRegex = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    //private static final String ipRegex = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     
     
     private static void readPolicyFile(String policyFileName) throws IOException{
-        Pattern hostPattern1 = Pattern.compile("host=[0-255].[0-255].[0-255].[0-255]");
+        Pattern hostPattern1 = Pattern.compile("host=(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
         Pattern namePattern = Pattern.compile("name=(.)+$");
         Pattern typePattern = Pattern.compile("stateful|stateless");
         Pattern protoPattern = Pattern.compile("tcp|udp");
         Pattern hostPortPattern = Pattern.compile("host_port=[0-9a-zA-Z]+");
         Pattern attackerPortPattern = Pattern.compile("attacker_port=[0-9a-zA-Z]+");
-        Pattern attackerPattern = Pattern.compile("attacker=[0-9a-zA-Z]+");
+        Pattern attackerPattern = Pattern.compile("attacker=any|attacker=(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
         Pattern fromHostPattern = Pattern.compile("from_host=(.)+$");
         Pattern toHostPattern = Pattern.compile("to_host=(.)+$");
+//        String host = null;
+//        String name = null;
+//        String type = null;
+//        String protocol = null;
+//        String hostPort = null;
+//        String attackerPort = null;
+//        String attacker = null;
+//        String fromHost = null;
+//        String toHost = null;
         Matcher match;
     	String line = null;
         FileReader fileReader = new FileReader(policyFileName);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
+        int indexIterator = -1;
 
         while((line = bufferedReader.readLine()) != null) {
             System.out.println(line);
@@ -54,6 +64,7 @@ public class Ids {
             	for(int i = 5; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
+            	host = helper;
             	System.out.println("----------------------------" + helper);
             }
             //get the name
@@ -63,6 +74,7 @@ public class Ids {
             	for(int i = 5; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
+            	indexIterator++;
             	System.out.println("----------------------------" + helper);
             }
             //get the type
@@ -70,7 +82,6 @@ public class Ids {
             if(match.find()){
             	System.out.println("----------------------------" + match.group());
             }
-
             //get the proto
             match = protoPattern.matcher(line);
             if(match.find()){
@@ -94,8 +105,15 @@ public class Ids {
             	}
             	System.out.println("----------------------------" + helper);
             }
-            
-            
+            //get the attacker ip
+            match = attackerPattern.matcher(line);
+            if(match.find()){
+            	String helper = "";
+            	for(int i = 9; i < match.group().length(); i++){
+            		helper += match.group().charAt(i);
+            	}
+            	System.out.println("----------------------------" + helper);
+            }
             //get from host
             match = fromHostPattern.matcher(line);
             if(match.find()){
