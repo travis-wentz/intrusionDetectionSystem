@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jnetpcap.Pcap;
 import org.jnetpcap.packet.Payload;
@@ -44,15 +46,27 @@ public class Ids {
             final Ip4 ip4 = new Ip4();
             final Tcp tcp = new Tcp();
             final Payload payload = new Payload();
+            Pattern pattern = Pattern.compile("Now I own your computer");
+            Matcher match;
+            String test = "";
+            
 
             public void nextPacket(PcapPacket packet, String user) {
                 String currPayload = "";
                 if (packet.hasHeader(Ip4.ID)) {
                     packet.getHeader(ip4);
-                    if(packet.hasHeader(payload)){
-                        //currPayload = payload.toHexdump();
-                    	currPayload = payload.toString();
+
+                    if(packet.hasHeader(payload)){                    
+                        currPayload = payload.toHexdump();
+                        currPayload = currPayload.replaceAll(" ", "");
+                        currPayload = currPayload.replaceAll("\n", "");
+                        match = pattern.matcher(payload.toHexdump());
                         System.out.println("\n The payload info is : " + currPayload + "\n");
+                        while (match.find()) {
+                            test += match.group();
+                          System.out.println("A match was found");
+                          System.out.println(match.group());
+                        }
                     }
                     String currSource = FormatUtils.ip(ip4.source());
                     System.out.println("The source IP is : " + currSource + "\n");
@@ -61,13 +75,14 @@ public class Ids {
 //				x++;
 
                 //print out all the packet info
-                XmlFormatter out = new XmlFormatter(System.out);
-                try {
-                    out.format(packet);
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+//                XmlFormatter out = new XmlFormatter(System.out);
+//                try {
+//
+//                    out.format(packet);
+//                } catch (IOException e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
             }
         };
         pcap.loop(-1, handler, "hi"); //the "-1" value makes it run infinite times (to the end of the file)
