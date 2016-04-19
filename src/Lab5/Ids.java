@@ -31,7 +31,13 @@ public class Ids {
     
     
     private static void readPolicyFile(String policyFileName) throws IOException{
-        Pattern hostPattern1 = Pattern.compile("host=\\d[1-3]");
+        Pattern hostPattern1 = Pattern.compile("host=\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}");
+        Pattern hostPattern2 = Pattern.compile("\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}");
+        Pattern namePattern = Pattern.compile("name=(.)+$");
+        Pattern typePattern = Pattern.compile("stateful|stateless");
+        Pattern protoPattern = Pattern.compile("tcp|udp");
+        Pattern hostPortPattern = Pattern.compile("host_port=[0-9a-zA-Z]+");
+        Pattern attackerPortPattern = Pattern.compile("attacker_port=[0-9a-zA-Z]+");
         Matcher match;
     	String line = null;
         FileReader fileReader = new FileReader(policyFileName);
@@ -39,6 +45,52 @@ public class Ids {
 
         while((line = bufferedReader.readLine()) != null) {
             System.out.println(line);
+            //get the host
+            match = hostPattern1.matcher(line);
+            if(match.find()){
+            	match = hostPattern2.matcher(match.group());
+            	if(match.find()){
+            		System.out.println("----------------------------" + match.group());
+            	}
+            }
+            //get the name
+            match = namePattern.matcher(line);
+            if(match.find()){
+            	String helper = "";
+            	for(int i = 5; i < match.group().length(); i++){
+            		helper += match.group().charAt(i);
+            	}
+            	System.out.println("----------------------------" + helper);
+            }
+            //get the type
+            match = typePattern.matcher(line);
+            if(match.find()){
+            	System.out.println("----------------------------" + match.group());
+            }
+
+            //get the proto
+            match = protoPattern.matcher(line);
+            if(match.find()){
+            	System.out.println("----------------------------" + match.group());
+            }
+            //get the host port
+            match = hostPortPattern.matcher(line);
+            if(match.find()){
+            	String helper = "";
+            	for(int i = 10; i < match.group().length(); i++){
+            		helper += match.group().charAt(i);
+            	}
+            	System.out.println("----------------------------" + helper);
+            }
+            //get the attacker port
+            match = attackerPortPattern.matcher(line);
+            if(match.find()){
+            	String helper = "";
+            	for(int i = 14; i < match.group().length(); i++){
+            		helper += match.group().charAt(i);
+            	}
+            	System.out.println("----------------------------" + helper);
+            }
         }
         
         bufferedReader.close();
