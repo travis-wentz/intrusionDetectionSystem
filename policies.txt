@@ -7,7 +7,6 @@ attacker_port=any
 attacker=any
 to_host="Now I own your computer"
 
-host=192.168.0.1
 name=Blame Attack 2
 type=stateful
 host_port=5551
@@ -15,7 +14,6 @@ attacker_port=any
 attacker=any
 to_host="Now I own your computer"
 
-host=192.168.0.1
 name=Buffer Overflow
 type=stateful
 host_port=5551
@@ -23,7 +21,6 @@ attacker_port=any
 attacker=any
 to_host="\x90{10}.*\xcd\x80"
 
-host=192.168.0.1
 name=Plaintext POP
 type=stateless
 proto=tcp
@@ -36,7 +33,6 @@ from_host="\+OK.*\r\n"
 to_host="PASS.*\r\n"
 from_host="\+OK.*\r\n"
 
-host=192.168.0.1
 name=TFTP attacker boot
 type=stateless
 proto=udp

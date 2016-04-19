@@ -24,10 +24,12 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 
 public class Ids {
 
-    private static int x = 1; //for testing packet handler loop
+    private static int x = 1; //for packet handler loop
     private static String host = null;
     
-    private static void readPolicyFile(String policyFileName, String traceFileName) throws IOException{
+    private static void readPolicyFile(String policyFileName) throws IOException{
+        Pattern hostPattern1 = Pattern.compile("");
+        Matcher match;
     	String line = null;
         FileReader fileReader = new FileReader(policyFileName);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -37,7 +39,6 @@ public class Ids {
         }
         
         bufferedReader.close();
-    	readPcapFile(traceFileName);
     }
 
     /*
@@ -138,7 +139,7 @@ public class Ids {
 //			readPolicyFile(policyName, traceName);
 //		}
 
-    	readPolicyFile("policies", "trace1.pcap");
+    	readPolicyFile("policies.txt");
         //readPcapFile("trace1.pcap");
     }
 
