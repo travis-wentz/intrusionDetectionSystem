@@ -1,5 +1,4 @@
 package Lab5;
-//Travis is here
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,6 +25,20 @@ import org.jnetpcap.protocol.tcpip.Tcp;
 public class Ids {
 
     private static int x = 1; //for testing packet handler loop
+    private static String host = null;
+    
+    private static void readPolicyFile(String policyFileName, String traceFileName) throws IOException{
+    	String line = null;
+        FileReader fileReader = new FileReader(policyFileName);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        while((line = bufferedReader.readLine()) != null) {
+            System.out.println(line);
+        }
+        
+        bufferedReader.close();
+    	readPcapFile(traceFileName);
+    }
 
     /*
 	 * NOTE: most of the code in the following method was taken from the open-source
@@ -85,7 +98,6 @@ public class Ids {
 //
 //                    out.format(packet);
 //                } catch (IOException e) {
-//                    // TODO Auto-generated catch block
 //                    e.printStackTrace();
 //                }
             }
@@ -96,23 +108,19 @@ public class Ids {
         pcap.close();
     }
 
-    //this should take in a packet as an argument
-    private static void regexMatching() {
-
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //		Scanner in = new Scanner(System.in);
-//		String input = null;
+//		String traceName = null;
+//		String policyName = null;
 //		File policyFile;
 //		File traceFile;
 //		
 //		System.out.println("Please enter the name of the policy file:");
-//		input = in.nextLine();
-//		policyFile = new File(input);
+//		policyName = in.nextLine();
+//		policyFile = new File(policyName);
 //		if(!policyFile.exists()){
-//			input += ".txt";
-//			policyFile = new File(input);
+//			policyName += ".txt";
+//			policyFile = new File(policyName);
 //			if(!policyFile.exists()){
 //				System.out.println("Policies file not found. Please make sure it is in the project folder for lab 5.");
 //				in.close();
@@ -121,16 +129,17 @@ public class Ids {
 //		}
 //		
 //		System.out.println("Please enter the name of the trace file:");
-//		input = in.nextLine();
+//		traceName = in.nextLine();
 //		in.close();
-//		traceFile = new File(input);
+//		traceFile = new File(traceName);
 //		if(!traceFile.exists()){
 //			System.out.println("Trace file not found. Please make sure it is in the project folder for lab 5.");
 //		}else{
-//			readPcapFile(input);
+//			readPolicyFile(policyName, traceName);
 //		}
 
-        readPcapFile("trace1.pcap");
+    	readPolicyFile("policies", "trace1.pcap");
+        //readPcapFile("trace1.pcap");
     }
 
 }
