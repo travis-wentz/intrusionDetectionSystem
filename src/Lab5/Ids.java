@@ -13,7 +13,27 @@ import org.jnetpcap.packet.PcapPacketHandler;
 
 public class Ids {
 	
-	public Ids(){
+	private static void readPcapFile(String pcapFileName){
+		StringBuilder err = new StringBuilder();
+		Pcap pcap = Pcap.openOffline(pcapFileName, err);
+		
+		if(pcap == null){
+			System.out.println("There was an error reading your trace file. "
+					+ "Please make sure it is in the proper directory and spelled correctly.");
+			return;
+		}
+		
+		//TODO figure out how to read the packets
+		
+		//TODO regexs to match policies
+	}
+	
+	//this should take in a packet as an argument
+	private static void regexMatching(){
+		
+	}
+
+	public static void main(String[] args) {
 //		Scanner in = new Scanner(System.in);
 //		String input = null;
 //		File policyFile;
@@ -43,30 +63,6 @@ public class Ids {
 //		}
 		
 		readPcapFile("trace1.pcap");
-	}
-	
-	private void readPcapFile(String pcapFileName){
-		StringBuilder err = new StringBuilder();
-		Pcap pcap = Pcap.openOffline(pcapFileName, err);
-		
-		if(pcap == null){
-			System.out.println("There was an error reading your trace file. "
-					+ "Please make sure it is in the proper directory and spelled correctly.");
-			return;
-		}
-		
-		//TODO figure out how to read the packets
-		
-		//TODO regexs to match policies
-	}
-	
-	//this should take in a packet as an argument
-	private void regexMatching(){
-		
-	}
-
-	public static void main(String[] args) {
-		new Ids();
 	}
 
 }
