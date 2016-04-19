@@ -49,6 +49,7 @@ public class Ids {
             Pattern pattern = Pattern.compile("Now I own your computer");
             Matcher match;
             String test = "";
+            String regex = "[^((0-9a-zA-Z){2}' '.)] ";
             
 
             public void nextPacket(PcapPacket packet, String user) {
@@ -58,14 +59,18 @@ public class Ids {
 
                     if(packet.hasHeader(payload)){                    
                         currPayload = payload.toHexdump();
-                        currPayload = currPayload.replaceAll(" ", "");
-                        currPayload = currPayload.replaceAll("\n", "");
-                        match = pattern.matcher(payload.toHexdump());
-                        System.out.println("\n The payload info is : " + currPayload + "\n");
-                        while (match.find()) {
-                            test += match.group();
-                          System.out.println("A match was found");
-                          System.out.println(match.group());
+                        byte[] byteArray = payload.getByteArray(0, payload.getLength());
+                        try{
+                            currPayload = new String(byteArray, "UTF-8");
+                        }catch(UnsupportedEncodingException e){
+                            System.out.println("Failed");
+                            e.printStackTrace();
+                        }
+                        match = pattern.matcher(currPayload);
+                  //      System.out.println("\n The payload info is :\n " + currPayload + "\n");
+                        if(match.find()) {
+                          System.out.println("A match was found for '"+match.group()+"'");
+
                         }
                     }
                     String currSource = FormatUtils.ip(ip4.source());
