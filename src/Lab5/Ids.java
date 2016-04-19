@@ -28,7 +28,7 @@ public class Ids {
     private static String host = null;
     
     private static void readPolicyFile(String policyFileName) throws IOException{
-        Pattern hostPattern1 = Pattern.compile("");
+        Pattern hostPattern1 = Pattern.compile("host=\\d[1-3]");
         Matcher match;
     	String line = null;
         FileReader fileReader = new FileReader(policyFileName);
@@ -84,11 +84,10 @@ public class Ids {
                   //      System.out.println("\n The payload info is :\n " + currPayload + "\n");
                         if(match.find()) {
                           System.out.println("A match was found for '"+match.group()+"'");
-
+                          String currSource = FormatUtils.ip(ip4.source());
+                          System.out.println("The source IP is : " + currSource + "\n");
                         }
                     }
-                    String currSource = FormatUtils.ip(ip4.source());
-                    System.out.println("The source IP is : " + currSource + "\n");
                 }
 //				System.out.println(x + " " + "size of packet is=" + packet.size());
 //				x++;
