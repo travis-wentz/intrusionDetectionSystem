@@ -31,13 +31,15 @@ public class Ids {
     
     
     private static void readPolicyFile(String policyFileName) throws IOException{
-        Pattern hostPattern1 = Pattern.compile("host=\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}");
-        Pattern hostPattern2 = Pattern.compile("\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}");
+        Pattern hostPattern1 = Pattern.compile("host=[0-255].[0-255].[0-255].[0-255]");
         Pattern namePattern = Pattern.compile("name=(.)+$");
         Pattern typePattern = Pattern.compile("stateful|stateless");
         Pattern protoPattern = Pattern.compile("tcp|udp");
         Pattern hostPortPattern = Pattern.compile("host_port=[0-9a-zA-Z]+");
         Pattern attackerPortPattern = Pattern.compile("attacker_port=[0-9a-zA-Z]+");
+        Pattern attackerPattern = Pattern.compile("attacker=[0-9a-zA-Z]+");
+        Pattern fromHostPattern = Pattern.compile("from_host=(.)+$");
+        Pattern toHostPattern = Pattern.compile("to_host=(.)+$");
         Matcher match;
     	String line = null;
         FileReader fileReader = new FileReader(policyFileName);
@@ -48,10 +50,11 @@ public class Ids {
             //get the host
             match = hostPattern1.matcher(line);
             if(match.find()){
-            	match = hostPattern2.matcher(match.group());
-            	if(match.find()){
-            		System.out.println("----------------------------" + match.group());
+            	String helper = "";
+            	for(int i = 5; i < match.group().length(); i++){
+            		helper += match.group().charAt(i);
             	}
+            	System.out.println("----------------------------" + helper);
             }
             //get the name
             match = namePattern.matcher(line);
@@ -87,6 +90,26 @@ public class Ids {
             if(match.find()){
             	String helper = "";
             	for(int i = 14; i < match.group().length(); i++){
+            		helper += match.group().charAt(i);
+            	}
+            	System.out.println("----------------------------" + helper);
+            }
+            
+            
+            //get from host
+            match = fromHostPattern.matcher(line);
+            if(match.find()){
+            	String helper = "";
+            	for(int i = 11; i < match.group().length() - 1; i++){
+            		helper += match.group().charAt(i);
+            	}
+            	System.out.println("----------------------------" + helper);
+            }
+            //get to host
+            match = toHostPattern.matcher(line);
+            if(match.find()){
+            	String helper = "";
+            	for(int i = 9; i < match.group().length() - 1; i++){
             		helper += match.group().charAt(i);
             	}
             	System.out.println("----------------------------" + helper);
