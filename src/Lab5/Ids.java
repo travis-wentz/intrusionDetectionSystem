@@ -20,13 +20,14 @@ import org.jnetpcap.packet.PcapPacketHandler;
 import org.jnetpcap.packet.format.FormatUtils;
 import org.jnetpcap.packet.format.XmlFormatter;
 import org.jnetpcap.protocol.network.Ip4;
-import org.jnetpcap.protocol.network.Ip6;
 import org.jnetpcap.protocol.tcpip.Tcp;
 
 public class Ids {
 
     private static int x = 1; //for packet handler loop
     private static String host = null;
+    private static LinkedList<Policy> policies = new LinkedList();
+    private static final String ipRegex = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     
     
     private static void readPolicyFile(String policyFileName) throws IOException{
@@ -37,7 +38,6 @@ public class Ids {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         while((line = bufferedReader.readLine()) != null) {
-            
             System.out.println(line);
         }
         
