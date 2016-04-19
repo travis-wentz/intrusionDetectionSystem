@@ -14,37 +14,40 @@ import org.jnetpcap.packet.PcapPacketHandler;
 public class Ids {
 	
 	public Ids(){
-		Scanner in = new Scanner(System.in);
-		String input = null;
-		File policyFile;
-		File traceFile;
+//		Scanner in = new Scanner(System.in);
+//		String input = null;
+//		File policyFile;
+//		File traceFile;
+//		
+//		System.out.println("Please enter the name of the policy file:");
+//		input = in.nextLine();
+//		policyFile = new File(input);
+//		if(!policyFile.exists()){
+//			input += ".txt";
+//			policyFile = new File(input);
+//			if(!policyFile.exists()){
+//				System.out.println("Policies file not found. Please make sure it is in the project folder for lab 5.");
+//				in.close();
+//				return;
+//			}
+//		}
+//		
+//		System.out.println("Please enter the name of the trace file:");
+//		input = in.nextLine();
+//		in.close();
+//		traceFile = new File(input);
+//		if(!traceFile.exists()){
+//			System.out.println("Trace file not found. Please make sure it is in the project folder for lab 5.");
+//		}else{
+//			readPcapFile(input);
+//		}
 		
-		System.out.println("Please enter the name of the policy file:");
-		input = in.nextLine();
-		policyFile = new File(input);
-		if(!policyFile.exists()){
-			input += ".txt";
-			policyFile = new File(input);
-			if(!policyFile.exists()){
-				System.out.println("Policies file not found. Please make sure it is in the project folder for lab 5.");
-				in.close();
-				return;
-			}
-		}
-		
-		System.out.println("Please enter the name of the trace file:");
-		input = in.nextLine();
-		in.close();
-		traceFile = new File(input);
-		if(!traceFile.exists()){
-			System.out.println("Trace file not found. Please make sure it is in the project folder for lab 5.");
-		}else{
-			readPcapFile(input);
-		}
+		readPcapFile("trace1.pcap");
 	}
 	
 	private void readPcapFile(String pcapFileName){
-		Pcap pcap = Pcap.openOffline(pcapFileName, null);
+		StringBuilder err = new StringBuilder();
+		Pcap pcap = Pcap.openOffline(pcapFileName, err);
 		
 		if(pcap == null){
 			System.out.println("There was an error reading your trace file. "
