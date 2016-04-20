@@ -22,7 +22,7 @@ public class Policy {
     private LinkedList<String> to_host = new LinkedList<>();
     private String proto;
 
-    /**
+    /*
      *
      *
      * @param name Name of policy
@@ -95,5 +95,19 @@ public class Policy {
 
     public void setAttackerPort(String attacker_port) {
         this.attacker_port = attacker_port;
+    }
+    public void printPolicy(){
+        System.out.println("Policy name \t\t: "+getName());
+        System.out.println("Policy type \t\t: "+getType());
+        System.out.println("Policy host_port \t: "+getHostPort());
+        System.out.println("Policy attacker_port \t: "+getAttackerPort());
+        System.out.println("Policy attacker \t: "+getAttacker());
+        for(int i=0;i<this.to_host.size(); i++){
+            System.out.println("Policy to host \t\t: "+to_host.get(i));
+        }
+        for(int i=0;i<this.from_host.size(); i++){
+            System.out.println("Policy from host \t: "+from_host.get(i));
+        }
+        System.out.println("Policy proto \t\t: "+getProto());
     }
 }
