@@ -13,11 +13,10 @@ import java.util.LinkedList;
  */
 public class Policy {
 
-    private String host;
     private String name;
     private String type;
-    private int host_port;
-    private int attacker_port;
+    private String host_port;
+    private String attacker_port;
     private String attacker;
     private LinkedList<String> from_host;
     private LinkedList<String> to_host;
@@ -25,61 +24,13 @@ public class Policy {
 
     /**
      *
-     * This class is for blah
      *
-     * @param host IP address of host
      * @param name Name of policy
-     * @param type Type of policy (stateful|stateless)
-     * @param proto Protocol used TCP or UDP
-     * @param host_port Port host is using
-     * @param attacker_port Port attacker is using
-     * @param attacker IP address of attacker
-     * @param from_host String from host (from_host|to_host)=regexp\n
-     * @param to_host String to host (from_host|to_host)=regexp\n
+     *
+     *
      */
-    public Policy(String host,
-            String name,
-            String type,
-            String proto,
-            int host_port,
-            int attacker_port,
-            String attacker,
-            String from_host,
-            String to_host
-    ) {
-
-        this.host = host;
+    public Policy(String name) {
         this.name = name;
-        this.type = type;
-        this.proto = proto;
-        this.host_port = host_port;
-        this.attacker_port = attacker_port;
-        this.attacker = attacker;
-        this.from_host.add(from_host);
-        this.to_host.add(to_host);
-    }
-        public Policy(String host,
-            String name,
-            String type,
-            int host_port,
-            int attacker_port,
-            String attacker,
-            String from_host,
-            String to_host
-    ) {
-
-        this.host = host;
-        this.name = name;
-        this.type = type;
-        this.host_port = host_port;
-        this.attacker_port = attacker_port;
-        this.attacker = attacker;
-        this.from_host.add(from_host);
-        this.to_host.add(to_host);
-    }
-
-    public String getHost() {
-        return this.host;
     }
 
     public String getName() {
@@ -106,19 +57,43 @@ public class Policy {
         return this.to_host;
     }
 
-    public int getHostPort() {
+    public String getHostPort() {
         return this.host_port;
     }
 
-    public int getAttackerPort() {
+    public String getAttackerPort() {
         return this.attacker_port;
     }
 
-    public void addFromHost(String from_host) {
+    public void setFromHost(String from_host) {
         this.from_host.add(from_host);
     }
 
-    public void addToHost(String to_host) {
+    public void setToHost(String to_host) {
         this.to_host.add(to_host);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setProto(String proto) {
+        this.proto = proto;
+    }
+
+    public void setAttacker(String attacker) {
+        this.attacker = attacker;
+    }
+
+    public void setHostPort(String host_port) {
+        this.host_port = host_port;
+    }
+
+    public void setAttackerPort(String attacker_port) {
+        this.attacker_port = attacker_port;
     }
 }
