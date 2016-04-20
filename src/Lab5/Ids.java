@@ -40,15 +40,6 @@ public class Ids {
         Pattern attackerPattern = Pattern.compile("attacker=any|attacker=(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)");
         Pattern fromHostPattern = Pattern.compile("from_host=(.)+$");
         Pattern toHostPattern = Pattern.compile("to_host=(.)+$");
-//        String host = null;
-//        String name = null;
-//        String type = null;
-//        String protocol = null;
-//        String hostPort = null;
-//        String attackerPort = null;
-//        String attacker = null;
-//        String fromHost = null;
-//        String toHost = null;
         Matcher match;
     	String line = null;
         FileReader fileReader = new FileReader(policyFileName);
@@ -76,16 +67,20 @@ public class Ids {
             	}
             	indexIterator++;
             	System.out.println("----------------------------" + helper);
+            	Policy p = new Policy(helper);
+            	policies.add(p);
             }
             //get the type
             match = typePattern.matcher(line);
             if(match.find()){
             	System.out.println("----------------------------" + match.group());
+            	policies.get(indexIterator).setType(match.group());
             }
             //get the proto
             match = protoPattern.matcher(line);
             if(match.find()){
             	System.out.println("----------------------------" + match.group());
+            	policies.get(indexIterator).setProto(match.group());
             }
             //get the host port
             match = hostPortPattern.matcher(line);
@@ -95,6 +90,7 @@ public class Ids {
             		helper += match.group().charAt(i);
             	}
             	System.out.println("----------------------------" + helper);
+            	policies.get(indexIterator).setHostPort(helper);
             }
             //get the attacker port
             match = attackerPortPattern.matcher(line);
@@ -104,6 +100,7 @@ public class Ids {
             		helper += match.group().charAt(i);
             	}
             	System.out.println("----------------------------" + helper);
+            	policies.get(indexIterator).setAttackerPort(helper);
             }
             //get the attacker ip
             match = attackerPattern.matcher(line);
@@ -113,6 +110,7 @@ public class Ids {
             		helper += match.group().charAt(i);
             	}
             	System.out.println("----------------------------" + helper);
+            	policies.get(indexIterator).setAttacker(helper);
             }
             //get from host
             match = fromHostPattern.matcher(line);
@@ -122,6 +120,7 @@ public class Ids {
             		helper += match.group().charAt(i);
             	}
             	System.out.println("----------------------------" + helper);
+            	policies.get(indexIterator).setFromHost(helper);
             }
             //get to host
             match = toHostPattern.matcher(line);
@@ -131,6 +130,7 @@ public class Ids {
             		helper += match.group().charAt(i);
             	}
             	System.out.println("----------------------------" + helper);
+            	policies.get(indexIterator).setToHost(helper);
             }
         }
         
