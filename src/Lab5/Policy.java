@@ -18,8 +18,8 @@ public class Policy {
     private String host_port;
     private String attacker_port;
     private String attacker;
-    private LinkedList<String> from_host;
-    private LinkedList<String> to_host;
+    private LinkedList<String> from_host = new LinkedList<>();
+    private LinkedList<String> to_host = new LinkedList<>();
     private String proto;
 
     /**
@@ -34,7 +34,7 @@ public class Policy {
     }
 
     public String getName() {
-        return this.name;
+        return this.name; 
     }
 
     public String getType() {
