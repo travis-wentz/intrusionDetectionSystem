@@ -132,6 +132,7 @@ public class Ids {
         }
         
         bufferedReader.close();
+        
     }
 
     /*
@@ -184,11 +185,11 @@ public class Ids {
 //                        match = pattern.matcher(currPayload);
 //                        if(match.find()) {
                         	//policies.get(i).printPolicy();
-//                    	String foobar = memDump;
-//                		if(policies.get(i).getType().equals("stateless")){
-//                			foobar = currPayload;
-//                		}
-            			if(checkMsg(policies.get(i).getToHost(),policies.get(i).getFromHost(),currPayload)){
+                                String foobar = memDump;
+                		if(policies.get(i).getType().equals("stateless")){
+                			foobar = currPayload;
+                		}
+            			if(checkMsg(policies.get(i).getToHost(),policies.get(i).getFromHost(),foobar)){
                         	if(policies.get(i).getAttacker().equals("any") || policies.get(i).getAttacker().equals(FormatUtils.ip(ip4.source()))){
                         		int source = 0;
                         		int destination = 0;
@@ -203,6 +204,9 @@ public class Ids {
                         		if(policies.get(i).getAttackerPort().equals("any") || (Integer.parseInt(policies.get(i).getAttackerPort())) == source){
                         			if(policies.get(i).getHostPort().equals("any") || (Integer.parseInt(policies.get(i).getHostPort())) == destination){
 	                        			System.out.println("A match was found for '" + policies.get(i).getName() +"'");
+                                                        if(policies.get(i).getType().equals("stateful")){
+                                                                memDump = "";
+                                                        }
 		                                String currSource = FormatUtils.ip(ip4.source());
 		                                System.out.println("The attacker IP is : " + currSource + "\n");
                         			}
@@ -244,7 +248,7 @@ public class Ids {
     }
 
     public static void main(String[] args) throws IOException {
-		String traceName = "trace1.pcap";
+		String traceName = "trace5.pcap";
 		String policyName = "policies.txt";
  
 		if(1<args.length){
