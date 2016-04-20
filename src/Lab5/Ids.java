@@ -22,6 +22,11 @@ import org.jnetpcap.packet.format.XmlFormatter;
 import org.jnetpcap.protocol.network.Ip4;
 import org.jnetpcap.protocol.tcpip.Tcp;
 
+/**
+ * 
+ * @author Travis Wentz, Dustin Spivey, Trevor Gahl
+ *
+ */
 public class Ids {
 
     private static int x = 1; //for packet handler loop
@@ -47,89 +52,79 @@ public class Ids {
         int indexIterator = -1;
 
         while((line = bufferedReader.readLine()) != null) {
-            System.out.println(line);
+        	String helper = "";
             //get the host
             match = hostPattern1.matcher(line);
             if(match.find()){
-            	String helper = "";
             	for(int i = 5; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
             	host = helper;
-            	System.out.println("----------------------------" + helper);
             }
             //get the name
             match = namePattern.matcher(line);
             if(match.find()){
-            	String helper = "";
+            	
             	for(int i = 5; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
             	indexIterator++;
-            	System.out.println("----------------------------" + helper);
             	Policy p = new Policy(helper);
             	policies.add(p);
             }
             //get the type
             match = typePattern.matcher(line);
             if(match.find()){
-            	System.out.println("----------------------------" + match.group());
             	policies.get(indexIterator).setType(match.group());
             }
             //get the proto
             match = protoPattern.matcher(line);
             if(match.find()){
-            	System.out.println("----------------------------" + match.group());
             	policies.get(indexIterator).setProto(match.group());
             }
             //get the host port
             match = hostPortPattern.matcher(line);
             if(match.find()){
-            	String helper = "";
+            	
             	for(int i = 10; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
-            	System.out.println("----------------------------" + helper);
             	policies.get(indexIterator).setHostPort(helper);
             }
             //get the attacker port
             match = attackerPortPattern.matcher(line);
             if(match.find()){
-            	String helper = "";
+            	
             	for(int i = 14; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
-            	System.out.println("----------------------------" + helper);
             	policies.get(indexIterator).setAttackerPort(helper);
             }
             //get the attacker ip
             match = attackerPattern.matcher(line);
             if(match.find()){
-            	String helper = "";
+            	
             	for(int i = 9; i < match.group().length(); i++){
             		helper += match.group().charAt(i);
             	}
-            	System.out.println("----------------------------" + helper);
             	policies.get(indexIterator).setAttacker(helper);
             }
             //get from host
             match = fromHostPattern.matcher(line);
             if(match.find()){
-            	String helper = "";
+            	
             	for(int i = 11; i < match.group().length() - 1; i++){
             		helper += match.group().charAt(i);
             	}
-            	System.out.println("----------------------------" + helper);
             	policies.get(indexIterator).setFromHost(helper);
             }
             //get to host
             match = toHostPattern.matcher(line);
             if(match.find()){
-            	String helper = "";
+            	
             	for(int i = 9; i < match.group().length() - 1; i++){
             		helper += match.group().charAt(i);
             	}
-            	System.out.println("----------------------------" + helper);
             	policies.get(indexIterator).setToHost(helper);
             }
         }
@@ -138,7 +133,7 @@ public class Ids {
     }
 
     /*
-	 * NOTE: most of the code in the following method was taken from the open-source
+	 * NOTE: some of the code in the following method was taken from the open-source
 	 * 		tutorials by jnetpcap
 	 * 		http://jnetpcap.com/?q=userguide
      */
@@ -235,7 +230,7 @@ public class Ids {
 //		}
 
     	readPolicyFile("policies.txt");
-        //readPcapFile("trace1.pcap");
+        readPcapFile("trace1.pcap");
     }
 
 }
